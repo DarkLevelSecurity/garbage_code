@@ -1,4 +1,5 @@
 pub mod debug;
+pub mod accounts_mng;
 
 #[cfg(test)]
 mod test {
