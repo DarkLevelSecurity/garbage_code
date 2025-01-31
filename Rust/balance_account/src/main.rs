@@ -35,24 +35,10 @@ impl Account {
 
 fn main() {
     let mut account: Account;
-    let mut input = Login::default();
-    debug::head("create_account".to_uppercase());
-    debug::input("Enter your name:".to_string());
-    io::stdin().read_line(&mut input.0)
-        .expect("Failed to read the input: ");
-    debug::input("Enter your password: ".to_string());
-    io::stdin().read_line(&mut input.1)
-        .expect("Failed to read the input: ");
+    let input = get_login("create_account".to_string());
     account = create_account(input.0, input.1);
 
-    let mut input = Login::default();
-    debug::head("login".to_uppercase());
-    debug::input("Enter your name:".to_string());
-    io::stdin().read_line(&mut input.0)
-        .expect("Failed to read the input: ");
-    debug::input("Enter your password: ".to_string());
-    io::stdin().read_line(&mut input.1)
-        .expect("Failed to read the input: ");
+    let input = get_login("login".to_string());
     if !account.login(input.0, input.1) {
         debug::err("Wrong Name or Password".to_string());
         panic!("");
@@ -90,4 +76,18 @@ fn get_amount() -> f32 {
     io::stdin().read_line(&mut input)
         .expect("Failed to read the input: ");
     input.trim().parse().expect("wrong input")
+}
+
+fn get_login(header: String) -> Login {
+    let mut input = Login::default();
+
+    debug::head(header);
+    debug::input("Enter your name:".to_string());
+    io::stdin().read_line(&mut input.0)
+        .expect("Failed to read the input: ");
+    debug::input("Enter your password: ".to_string());
+    io::stdin().read_line(&mut input.1)
+        .expect("Failed to read the input: ");
+
+    Login(input.0, input.1)
 }
